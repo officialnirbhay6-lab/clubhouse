@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hall Mark Clubhouse | Luxury Architectural Experience</title>
+  <meta name="description" content="An ultra-premium architectural experience showcasing the Hall Mark Clubhouse. Inspired by cinematic storytelling, modern typography, and luxury motion design.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- GSAP & Lenis Smooth Scroll -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.9/dist/lenis.min.js"></script>
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="loading">
+
+  <!-- Custom Magnetic Cursor -->
+  <div id="custom-cursor">
+    <div id="cursor-ring"></div>
+    <div id="cursor-dot"></div>
+    <div id="cursor-text">EXPLORE</div>
+  </div>
+
+  <!-- Ambient Light Particle Canvas -->
+  <canvas id="particle-canvas"></canvas>
+
+  <!-- Sound Ambient Player -->
+  <audio id="ambient-audio" loop preload="auto">
+    <source src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Header Navigation -->
+  <header id="main-header">
+    <div class="header-inner">
+      <a href="#hero" class="brand-logo">
+        <span class="brand-mark">HALL MARK</span>
+        <span class="brand-sub">CLUB HOUSE</span>
+      </a>
+      
+      <nav class="nav-menu">
+        <a href="#hero" class="nav-link active" data-section="hero">Overview</a>
+        <a href="#architecture" class="nav-link" data-section="architecture">Architecture</a>
+        <a href="#ground-floor" class="nav-link" data-section="ground-floor">Ground Floor</a>
+        <a href="#first-floor" class="nav-link" data-section="first-floor">First Floor</a>
+        <a href="#second-floor" class="nav-link" data-section="second-floor">Second Floor</a>
+        <a href="#third-floor" class="nav-link" data-section="third-floor">Sky Terrace</a>
+        <a href="#video-cinema" class="nav-link" data-section="video-cinema">3D Theater</a>
+        <a href="#master-plan" class="nav-link" data-section="master-plan">Master Plan</a>
+      </nav>
+
+      <div class="header-actions">
+        <button id="audio-toggle" class="icon-btn" aria-label="Toggle Sound">
+          <i data-lucide="volume-x" id="sound-icon-off"></i>
+          <i data-lucide="volume-2" id="sound-icon-on" class="hidden"></i>
+          <span class="sound-wave">
+            <span></span><span></span><span></span>
+          </span>
+        </button>
+
+        <button class="btn-primary open-booking-modal" data-magnet>
+          <span>Reserve Walkthrough</span>
+          <i data-lucide="arrow-up-right"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN SCROLL CONTENT -->
+  <main id="smooth-wrapper">
+    <div id="smooth-content">
+
+      <!-- SECTION 1: HERO CANVAS IMAGE SEQUENCE -->
+      <section id="hero" class="hero-sequence-section">
+        <!-- Smooth Light Tint Overlay when text reveals -->
+        <div id="hero-text-tint" class="hero-text-tint-overlay"></div>
+
+        <div class="hero-canvas-container">
+          <canvas id="sequence-canvas"></canvas>
+          <div class="canvas-vignette"></div>
+          <div class="canvas-loader" id="canvas-loading-indicator">
+            <span class="spinner"></span>
+            <span>PRELOADING ARCHITECTURAL TOUR...</span>
+          </div>
+        </div>
+
+        <div class="hero-content container">
+          <div class="hero-badge">
+            <span class="badge-dot"></span>
+            <span>EXCLUSIVE CLUBHOUSE & RESIDENCES</span>
+          </div>
+
+          <h1 class="hero-title split-words" data-reveal>
+            WHERE LUXURY MEETS COMMUNITY
+          </h1>
+
+          <p class="hero-subtitle" data-fade-up>
+            An architectural sanctuary of refinement, private wellness, and elite community living.
+          </p>
+
+          <div class="hero-metrics-bar" data-fade-up>
+            <div class="metric-item">
+              <span class="metric-num" data-count="50000">0</span><span class="metric-unit">SQ FT</span>
+              <span class="metric-label">Total Floor Area</span>
+            </div>
+            <div class="metric-divider"></div>
+            <div class="metric-item">
+              <span class="metric-num" data-count="4">0</span><span class="metric-unit">+ SKY</span>
+              <span class="metric-label">Levels of Luxury</span>
+            </div>
+            <div class="metric-divider"></div>
+            <div class="metric-item">
+              <span class="metric-num" data-count="30">0</span><span class="metric-unit">+</span>
+              <span class="metric-label">Curated Amenities</span>
+            </div>
+            <div class="metric-divider"></div>
+            <div class="metric-item">
+              <span class="metric-num" data-count="100">0</span><span class="metric-unit">%</span>
+              <span class="metric-label">Bespoke Design</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="scroll-indicator" data-magnet>
+          <div class="mouse-icon">
+            <div class="wheel"></div>
+          </div>
+          <span class="scroll-text">SCROLL TO BUILD</span>
+          <i data-lucide="chevron-down"></i>
+        </div>
+      </section>
+
+      <!-- SECTION 2: ARCHITECTURE & MATERIAL PALETTE -->
+      <section id="architecture" class="section architecture-section">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-tag">CHAPTER 01 / FORM & MATERIALITY</span>
+            <h2 class="section-title split-words" data-reveal>Designed For Modern Living</h2>
+            <p class="section-lead" data-fade-up>
+              Conceived as a sanctuary of modern architectural rhythm, Hall Mark Clubhouse balances dramatic glass transparency, monolithic stone cantilever masses, and vertical teak privacy louvers.
+            </p>
+          </div>
+
+          <div class="arch-grid">
+            <div class="arch-card" data-tilt data-fade-up>
+              <div class="card-img-wrap">
+                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80" alt="Architectural Glass Façade">
+                <div class="card-tag">STRUCTURAL GLASS</div>
+              </div>
+              <div class="card-content">
+                <h3>Low-E Panoramic Glass Wall</h3>
+                <p>Floor-to-ceiling glass envelopes allow daylight to flood interior marble halls while insulating thermal performance.</p>
+                <div class="card-meta">
+                  <span>Transparency Rating: 94%</span>
+                  <span>UV Protection: 99.8%</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="arch-card" data-tilt data-fade-up>
+              <div class="card-img-wrap">
+                <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80" alt="Natural Teak Louvers">
+                <div class="card-tag">NATURAL TIMBER</div>
+              </div>
+              <div class="card-content">
+                <h3>Vertical Teak Louver Skin</h3>
+                <p>Precision-milled vertical slats sculpt golden-hour sunlight into dynamic interior shadows throughout the day.</p>
+                <div class="card-meta">
+                  <span>Species: Teak Wood</span>
+                  <span>Acoustic Damping</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="arch-card" data-tilt data-fade-up>
+              <div class="card-img-wrap">
+                <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80" alt="Italian Marble & Concrete">
+                <div class="card-tag">MARBLE & MONOLITH</div>
+              </div>
+              <div class="card-content">
+                <h3>Calacatta Marble & Concrete</h3>
+                <p>Monolithic concrete columns grounded by vein-matched Italian marble floors create timeless architectural gravitas.</p>
+                <div class="card-meta">
+                  <span>Origin: Carrara, Italy</span>
+                  <span>Finish: Honed Silk</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Video Timestamp Feature Row -->
+          <div class="video-feature-banner" data-fade-up>
+            <div class="v-banner-info">
+              <span class="v-badge"><i data-lucide="play-circle"></i> VIDEO WALKTHROUGH MOMENT</span>
+              <h3>Architectural Exterior Rotational View</h3>
+              <p>Experience the 360-degree rotational camera movement around the front curtain wall and vertical louvers.</p>
+            </div>
+            <button class="btn-secondary seek-video-btn" data-time="1.5">
+              <i data-lucide="film"></i>
+              <span>Play Facade Scene (00:01)</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 3: GROUND FLOOR -->
+      <section id="ground-floor" class="section floor-section">
+        <div class="container">
+          <div class="floor-header">
+            <div class="floor-badge">LEVEL 00</div>
+            <h2 class="floor-title split-words" data-reveal>Ground Level Distinction</h2>
+            <p class="floor-subtitle" data-fade-up>
+              A grand arrival experience featuring double-height reception, marble elevator vestibules, and direct access to the outdoor resort pool deck.
+            </p>
+          </div>
+
+          <div class="amenity-showcase">
+            <div class="showcase-nav" data-fade-up>
+              <button class="tab-btn active" data-tab="lobby" data-time="4">
+                <i data-lucide="building"></i>
+                <span>Double-Height Lobby</span>
+              </button>
+              <button class="tab-btn" data-tab="pool" data-time="10">
+                <i data-lucide="waves"></i>
+                <span>Resort Swimming Pool</span>
+              </button>
+              <button class="tab-btn" data-tab="dining" data-time="19">
+                <i data-lucide="utensils"></i>
+                <span>Gourmet Cafe & Dining</span>
+              </button>
+              <button class="tab-btn" data-tab="elevators" data-time="6">
+                <i data-lucide="chevrons-up-down"></i>
+                <span>Marble Elevator Hall</span>
+              </button>
+            </div>
+
+            <div class="showcase-content">
+              <div class="tab-pane active" id="tab-lobby">
+                <div class="pane-grid">
+                  <div class="pane-media">
+                    <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80" alt="Double Height Reception Lobby">
+                    <button class="play-scene-overlay seek-video-btn" data-time="4">
+                      <i data-lucide="play"></i> Watch Lobby Video (00:04)
+                    </button>
+                  </div>
+                  <div class="pane-details">
+                    <h3>The Arrival Reception</h3>
+                    <p>Featuring book-matched marble walls, recessed LED warm light channels, acoustic timber louvers, and bespoke concierge desks.</p>
+                    <ul class="spec-list">
+                      <li><i data-lucide="check"></i> 24/7 VIP Concierge Desk</li>
+                      <li><i data-lucide="check"></i> Dual High-Speed Passenger Elevators</li>
+                      <li><i data-lucide="check"></i> Lounge Waiting Alcove with Designer Furniture</li>
+                      <li><i data-lucide="check"></i> Direct Access to Pool Deck & Garage</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tab-pane" id="tab-pool">
+                <div class="pane-grid">
+                  <div class="pane-media">
+                    <img src="https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?auto=format&fit=crop&w=1200&q=80" alt="Resort Swimming Pool">
+                    <button class="play-scene-overlay seek-video-btn" data-time="10">
+                      <i data-lucide="play"></i> Watch Pool Video (00:10)
+                    </button>
+                  </div>
+                  <div class="pane-details">
+                    <h3>Resort Swimming Pool & Deck</h3>
+                    <p>Temperature-controlled infinity lap pool surrounded by teak wood decking, luxury sun loungers, shade umbrellas, and sunset vistas.</p>
+                    <ul class="spec-list">
+                      <li><i data-lucide="check"></i> 25-Meter Half-Olympic Swimming Pool</li>
+                      <li><i data-lucide="check"></i> Teak Decking & Sun Loungers</li>
+                      <li><i data-lucide="check"></i> Integrated Kid Pool Zone</li>
+                      <li><i data-lucide="check"></i> Outdoor Shower & Changing Pavilions</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tab-pane" id="tab-dining">
+                <div class="pane-grid">
+                  <div class="pane-media">
+                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80" alt="Gourmet Cafe & Dining">
+                    <button class="play-scene-overlay seek-video-btn" data-time="19">
+                      <i data-lucide="play"></i> Watch Dining Video (00:19)
+                    </button>
+                  </div>
+                  <div class="pane-details">
+                    <h3>Gourmet Cafe & Fine Dining</h3>
+                    <p>An artisan espresso bar and fine dining hall offering curated international cuisine, warm mood lighting, and glass curtain views.</p>
+                    <ul class="spec-list">
+                      <li><i data-lucide="check"></i> Artisan Coffee Bar & Pastry Counter</li>
+                      <li><i data-lucide="check"></i> 60-Seat Fine Dining Hall</li>
+                      <li><i data-lucide="check"></i> Private Dining Rooms for Parties</li>
+                      <li><i data-lucide="check"></i> Alfresco Terrace Seating</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tab-pane" id="tab-elevators">
+                <div class="pane-grid">
+                  <div class="pane-media">
+                    <img src="https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?auto=format&fit=crop&w=1200&q=80" alt="Marble Elevator Hall">
+                    <button class="play-scene-overlay seek-video-btn" data-time="6">
+                      <i data-lucide="play"></i> Watch Elevator Hall Video (00:06)
+                    </button>
+                  </div>
+                  <div class="pane-details">
+                    <h3>Subterranean & Elevators Access</h3>
+                    <p>Seamless vertical transit connecting the underground EV charging parking garage to all clubhouse levels.</p>
+                    <ul class="spec-list">
+                      <li><i data-lucide="check"></i> Subterranean EV Charging Stations</li>
+                      <li><i data-lucide="check"></i> Smart Keycard Access Control</li>
+                      <li><i data-lucide="check"></i> Fire Safety Systems & Hydrant Cabinets</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 4: FIRST FLOOR -->
+      <section id="first-floor" class="section floor-section dark-bg">
+        <div class="container">
+          <div class="floor-header">
+            <div class="floor-badge">LEVEL 01</div>
+            <h2 class="floor-title split-words" data-reveal>First Floor Elevation</h2>
+            <p class="floor-subtitle" data-fade-up>
+              Dedicated to corporate governance, executive assemblies, and private social lounges.
+            </p>
+          </div>
+
+          <div class="split-feature-row" data-fade-up>
+            <div class="feature-text">
+              <span class="sub-tag">EXECUTIVE BOARDROOM</span>
+              <h3>Grand Conference & Meeting Suite</h3>
+              <p>
+                Equipped with a solid teak 20-seat executive conference table, state-of-the-art presentation displays, recessed lighting, and soundproof acoustic timber walls.
+              </p>
+              <div class="feature-specs">
+                <div class="spec-box">
+                  <span class="box-num">20+</span>
+                  <span class="box-lbl">Executive Seats</span>
+                </div>
+                <div class="spec-box">
+                  <span class="box-num">85"</span>
+                  <span class="box-lbl">4K Smart Display</span>
+                </div>
+                <div class="spec-box">
+                  <span class="box-num">STC 55</span>
+                  <span class="box-lbl">Acoustic Shield</span>
+                </div>
+              </div>
+              <button class="btn-secondary seek-video-btn" data-time="13">
+                <i data-lucide="play"></i> View Boardroom Video (00:13)
+              </button>
+            </div>
+            <div class="feature-image" data-tilt>
+              <img src="https://images.unsplash.com/photo-1431540015161-0bf868a2d407?auto=format&fit=crop&w=1200&q=80" alt="Grand Conference Room">
+              <div class="img-badge">TIMESTAMP 00:13</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 5: SECOND FLOOR -->
+      <section id="second-floor" class="section floor-section">
+        <div class="container">
+          <div class="floor-header">
+            <div class="floor-badge">LEVEL 02</div>
+            <h2 class="floor-title split-words" data-reveal>Second Floor Wellness & Recreation</h2>
+            <p class="floor-subtitle" data-fade-up>
+              A high-octane sanctuary combining cutting-edge physical conditioning with family recreation and indoor sports lounges.
+            </p>
+          </div>
+
+          <div class="grid-2col">
+            <div class="facility-card" data-fade-up data-tilt>
+              <div class="f-img">
+                <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1200&q=80" alt="Gym & Fitness Center">
+                <button class="f-play seek-video-btn" data-time="15">
+                  <i data-lucide="play"></i> Video 00:15
+                </button>
+              </div>
+              <div class="f-body">
+                <h3>State-of-the-Art Gymnasium</h3>
+                <p>Fully outfitted with TechnoGym treadmills, power racks, dumbbell sets, and panoramic floor-to-ceiling glass facing nature.</p>
+                <div class="f-tags">
+                  <span>Cardio Zone</span>
+                  <span>Free Weights</span>
+                  <span>Yoga Studio</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="facility-card" data-fade-up data-tilt>
+              <div class="f-img">
+                <img src="https://images.unsplash.com/photo-1511193311914-0346f16efe90?auto=format&fit=crop&w=1200&q=80" alt="Billiards & Games Lounge">
+                <button class="f-play seek-video-btn" data-time="17">
+                  <i data-lucide="play"></i> Video 00:17
+                </button>
+              </div>
+              <div class="f-body">
+                <h3>Billiards & Indoor Games Lounge</h3>
+                <p>Features tournament-spec pool tables, table tennis, kids play carpet zone, and executive lounge seating.</p>
+                <div class="f-tags">
+                  <span>8-Ball Pool</span>
+                  <span>Table Tennis</span>
+                  <span>Kids Zone</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 6: THIRD FLOOR & SKY TERRACE -->
+      <section id="third-floor" class="section floor-section dark-bg">
+        <div class="container">
+          <div class="floor-header">
+            <div class="floor-badge">LEVEL 03 & SKY TERRACE</div>
+            <h2 class="floor-title split-words" data-reveal>Sky Terrace & Private Guest Suites</h2>
+            <p class="floor-subtitle" data-fade-up>
+              The pinnacle of Hallmark Clubhouse. Elevated outdoor living under golden hour skies, complete with teak pergolas and open fire pits.
+            </p>
+          </div>
+
+          <div class="sky-hero-box" data-fade-up>
+            <div class="sky-media">
+              <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1600&q=80" alt="Rooftop Terrace Pergola & Fire Pit">
+              <button class="sky-video-btn seek-video-btn" data-time="20">
+                <i data-lucide="play-circle"></i> Watch Rooftop Sunset Video (00:20)
+              </button>
+            </div>
+            <div class="sky-content">
+              <div class="sky-tag">SUNSET PERGOLA & FIRE PIT</div>
+              <h3>Open-Air Rooftop Pavilion</h3>
+              <p>
+                Relax in bespoke outdoor modular sofas surrounding real ember fire pits. As dusk falls, ambient lanterns and pergolas transform the rooftop into an enchanting stargazing retreat overlooking the city skyline.
+              </p>
+              <div class="sky-features">
+                <div class="s-feat">
+                  <i data-lucide="flame"></i>
+                  <div>
+                    <strong>Ember Fire Pits</strong>
+                    <p>Smokeless gas fire pit tables</p>
+                  </div>
+                </div>
+                <div class="s-feat">
+                  <i data-lucide="sun"></i>
+                  <div>
+                    <strong>Teak Pergolas</strong>
+                    <p>Weather-resistant teak shading</p>
+                  </div>
+                </div>
+                <div class="s-feat">
+                  <i data-lucide="bed"></i>
+                  <div>
+                    <strong>Luxury Guest Suites</strong>
+                    <p>Private overnight accommodation</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION: DEDICATED 3D VIDEO CINEMA THEATER -->
+      <section id="video-cinema" class="section cinema-section">
+        <div class="container">
+          <div class="section-header center">
+            <span class="section-tag">CHAPTER 05 / 3D CINEMATIC WALKTHROUGH</span>
+            <h2 class="section-title split-words" data-reveal>Full 3D Architectural Film</h2>
+            <p class="section-lead" data-fade-up>
+              Immerse yourself in the complete ray-traced 3D architectural film of Hall Mark Clubhouse.
+            </p>
+          </div>
+
+          <div class="cinema-theater-box" data-fade-up>
+            <div class="theater-video-wrap">
+              <video id="cinema-video" playsinline preload="metadata">
+                <source src="VN20260730_192340 (1).mp4" type="video/mp4">
+              </video>
+              <div class="cinema-play-overlay" id="cinema-big-play">
+                <div class="play-pulse-ring"></div>
+                <i data-lucide="play"></i>
+              </div>
+            </div>
+
+            <!-- Custom Cinema Controls Bar -->
+            <div class="cinema-controls-bar">
+              <button id="cinema-play-btn" class="c-ctrl-btn" aria-label="Play/Pause Video">
+                <i data-lucide="play" id="cinema-play-icon"></i>
+                <i data-lucide="pause" id="cinema-pause-icon" class="hidden"></i>
+              </button>
+
+              <div class="c-scrub-wrap">
+                <input type="range" id="cinema-scrubber" min="0" max="100" value="0" step="0.1">
+                <div class="c-progress-fill" id="cinema-progress-fill"></div>
+              </div>
+
+              <span class="c-time" id="cinema-time-display">00:00 / 00:30</span>
+
+              <button id="cinema-fullscreen-btn" class="c-ctrl-btn" aria-label="Fullscreen">
+                <i data-lucide="maximize"></i>
+              </button>
+            </div>
+
+            <!-- Scene Selection Jump Bar -->
+            <div class="cinema-scene-bar">
+              <span class="scene-label">QUICK SCENE JUMP:</span>
+              <button class="scene-chip" data-jump="0">
+                <i data-lucide="camera"></i> 00:00 Front Elevation
+              </button>
+              <button class="scene-chip" data-jump="4">
+                <i data-lucide="building"></i> 00:04 Grand Lobby
+              </button>
+              <button class="scene-chip" data-jump="7">
+                <i data-lucide="car"></i> 00:07 EV Garage
+              </button>
+              <button class="scene-chip" data-jump="10">
+                <i data-lucide="waves"></i> 00:10 Resort Pool
+              </button>
+              <button class="scene-chip" data-jump="13">
+                <i data-lucide="briefcase"></i> 00:13 Boardroom
+              </button>
+              <button class="scene-chip" data-jump="15">
+                <i data-lucide="dumbbell"></i> 00:15 Fitness Gym
+              </button>
+              <button class="scene-chip" data-jump="20">
+                <i data-lucide="flame"></i> 00:20 Sky Terrace
+              </button>
+              <button class="scene-chip" data-jump="24">
+                <i data-lucide="layers"></i> 00:24 3D Cutaway
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 7: MASTER PLAN - ISOMETRIC EXPLODED FLOOR STACK -->
+      <section id="master-plan" class="section masterplan-section">
+        <div class="container">
+          <div class="section-header center">
+            <span class="section-tag">CHAPTER 06 / SPATIAL ARCHITECTURE</span>
+            <h2 class="section-title split-words" data-reveal>Interactive Master Plan</h2>
+            <p class="section-lead" data-fade-up>
+              Hover or tap any floor layer in this 3D exploded architectural stack to inspect floor plans, room allocations, and walkthrough moments.
+            </p>
+          </div>
+
+          <div class="stack-wrapper">
+            <!-- 3D Exploded Floor Cards Stack -->
+            <div class="isometric-stack" id="floor-stack">
+              
+              <!-- Floor Card 5: Rooftop -->
+              <div class="stack-layer" data-floor="rooftop" data-time="20" style="--layer-index: 5;">
+                <div class="layer-card">
+                  <div class="layer-header">
+                    <span class="l-num">R</span>
+                    <span class="l-name">Rooftop Terrace & Fire Pits</span>
+                  </div>
+                  <div class="layer-body">
+                    <p>Pergolas, Fire Pits, Sky Lounge, Sunset Deck</p>
+                    <span class="l-area">12,000 SQ FT</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Floor Card 4: 3rd Floor -->
+              <div class="stack-layer" data-floor="3rd" data-time="18" style="--layer-index: 4;">
+                <div class="layer-card">
+                  <div class="layer-header">
+                    <span class="l-num">03</span>
+                    <span class="l-name">VIP Guest Suites & Skylounge</span>
+                  </div>
+                  <div class="layer-body">
+                    <p>Luxury Suites, Restroom Hall, Private Balconies</p>
+                    <span class="l-area">9,500 SQ FT</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Floor Card 3: 2nd Floor -->
+              <div class="stack-layer" data-floor="2nd" data-time="15" style="--layer-index: 3;">
+                <div class="layer-card">
+                  <div class="layer-header">
+                    <span class="l-num">02</span>
+                    <span class="l-name">Wellness, Gym & Indoor Games</span>
+                  </div>
+                  <div class="layer-body">
+                    <p>Fitness Gymnasium, Billiards, Kids Play Zone</p>
+                    <span class="l-area">10,500 SQ FT</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Floor Card 2: 1st Floor -->
+              <div class="stack-layer" data-floor="1st" data-time="13" style="--layer-index: 2;">
+                <div class="layer-card">
+                  <div class="layer-header">
+                    <span class="l-num">01</span>
+                    <span class="l-name">Executive Boardroom & Conference</span>
+                  </div>
+                  <div class="layer-body">
+                    <p>Meeting Suites, Multipurpose Assembly Hall</p>
+                    <span class="l-area">9,000 SQ FT</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Floor Card 1: Ground Floor -->
+              <div class="stack-layer" data-floor="ground" data-time="4" style="--layer-index: 1;">
+                <div class="layer-card">
+                  <div class="layer-header">
+                    <span class="l-num">00</span>
+                    <span class="l-name">Reception Lobby & Swimming Pool</span>
+                  </div>
+                  <div class="layer-body">
+                    <p>Double Height Reception, Pool Deck, Cafe</p>
+                    <span class="l-area">11,000 SQ FT</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Floor Card 0: Subterranean -->
+              <div class="stack-layer" data-floor="basement" data-time="7" style="--layer-index: 0;">
+                <div class="layer-card">
+                  <div class="layer-header">
+                    <span class="l-num">B1</span>
+                    <span class="l-name">Subterranean EV Parking Garage</span>
+                  </div>
+                  <div class="layer-body">
+                    <p>EV Charging Bays, Valet Parking, Elevator Core</p>
+                    <span class="l-area">14,000 SQ FT</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Side Floor Info Panel -->
+            <div class="stack-info-panel" id="stack-info" data-fade-up>
+              <div class="info-badge" id="info-floor-badge">ROOFTOP TERRACE</div>
+              <h3 id="info-floor-title">Sky Pavilion & Fire Pits</h3>
+              <p id="info-floor-desc">
+                Click any layer in the 3D stack on the left to preview floor details, space allocations, and direct video walkthrough clips.
+              </p>
+              
+              <div class="info-stats-grid">
+                <div class="i-stat">
+                  <span class="i-lbl">Ceiling Height</span>
+                  <strong id="info-stat-height">Open Sky / 4.2m</strong>
+                </div>
+                <div class="i-stat">
+                  <span class="i-lbl">Occupancy</span>
+                  <strong id="info-stat-cap">150 Guests</strong>
+                </div>
+                <div class="i-stat">
+                  <span class="i-lbl">Key Feature</span>
+                  <strong id="info-stat-feat">Gas Ember Fire Pits</strong>
+                </div>
+              </div>
+
+              <button class="btn-primary seek-video-btn" id="info-video-btn" data-time="20">
+                <i data-lucide="film"></i>
+                <span>Jump to Floor Scene in Video</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 8: FINAL HERO & CTA -->
+      <section id="final-cta" class="section cta-section">
+        <div class="cta-video-bg">
+          <video autoplay loop muted playsinline preload="auto">
+            <source src="VN20260730_192340 (1).mp4#t=23" type="video/mp4">
+          </video>
+          <div class="cta-overlay"></div>
+        </div>
+
+        <div class="container cta-container center">
+          <span class="cta-tag" data-fade-up>YOUR SANCTUARY AWAITS</span>
+          <h2 class="cta-heading split-words" data-reveal>Experience Hall Mark Clubhouse</h2>
+          <p class="cta-sub" data-fade-up>
+            Schedule your private guided walkthrough with our resident architects and concierge team.
+          </p>
+
+          <div class="cta-actions" data-fade-up>
+            <button class="btn-primary open-booking-modal btn-xl" data-magnet>
+              <span>Book Private Walkthrough</span>
+              <i data-lucide="arrow-right"></i>
+            </button>
+            
+            <a href="#hero" class="btn-secondary btn-xl" data-magnet>
+              <span>Replay Cinematic Experience</span>
+              <i data-lucide="rotate-ccw"></i>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <footer id="main-footer">
+        <div class="container footer-inner">
+          <div class="footer-brand">
+            <span class="brand-mark">HALL MARK</span>
+            <span class="brand-sub">CLUB HOUSE</span>
+            <p>Where Luxury Meets Community.</p>
+          </div>
+
+          <div class="footer-links">
+            <div class="f-col">
+              <h4>EXPLORE</h4>
+              <a href="#hero">Exterior</a>
+              <a href="#architecture">Architecture</a>
+              <a href="#ground-floor">Ground Floor</a>
+              <a href="#master-plan">Master Plan</a>
+            </div>
+            <div class="f-col">
+              <h4>AMENITIES</h4>
+              <a href="#ground-floor">Resort Pool</a>
+              <a href="#second-floor">Fitness Center</a>
+              <a href="#first-floor">Boardroom Suite</a>
+              <a href="#third-floor">Sky Terrace</a>
+            </div>
+            <div class="f-col">
+              <h4>CONTACT</h4>
+              <p>Hall Mark Clubhouse Drive</p>
+              <p>concierge@hallmarkclubhouse.com</p>
+              <p>+1 (800) 555-HALL</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="footer-bottom container">
+          <p>&copy; 2026 Hall Mark Clubhouse. Ultra-Premium Architectural Experience.</p>
+          <div class="f-credits">Crafted with Ray-Tracing & GSAP Motion Engine</div>
+        </div>
+      </footer>
+
+    </div>
+  </main>
+
+  <!-- VIP BOOKING MODAL -->
+  <div id="booking-modal" class="modal-overlay">
+    <div class="modal-card">
+      <button class="modal-close" id="close-modal-btn" aria-label="Close Modal">
+        <i data-lucide="x"></i>
+      </button>
+
+      <div class="modal-header">
+        <span class="modal-tag">EXCLUSIVE INVITATION</span>
+        <h2>Reserve Private Walkthrough</h2>
+        <p>Experience Hall Mark Clubhouse in person with a guided architectural tour.</p>
+      </div>
+
+      <form id="booking-form" class="modal-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" required placeholder="e.g. Lord Alexander Wright">
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" required placeholder="alexander@domain.com">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" required placeholder="+1 (555) 000-0000">
+          </div>
+          <div class="form-group">
+            <label for="date">Preferred Tour Date</label>
+            <input type="date" id="date" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="interest">Primary Amenity Focus</label>
+          <select id="interest" required>
+            <option value="all">Complete Architectural Tour (All Floors)</option>
+            <option value="pool">Resort Pool & Ground Floor Lounge</option>
+            <option value="boardroom">Executive Boardroom & Conference Suite</option>
+            <option value="gym">Fitness Gym & Indoor Sports</option>
+            <option value="sky">Sky Terrace, Pergola & Fire Pits</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="notes">Special Requests or Guest Count</label>
+          <textarea id="notes" rows="3" placeholder="Specify any dietary preferences, guest count, or private meeting needs..."></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary btn-block">
+          <span>Confirm Private VIP Booking</span>
+          <i data-lucide="check-circle-2"></i>
+        </button>
+      </form>
+
+      <!-- Confirmation Toast inside Modal -->
+      <div id="booking-success" class="modal-success hidden">
+        <div class="success-icon"><i data-lucide="sparkles"></i></div>
+        <h3>Reservation Confirmed</h3>
+        <p>Thank you! Our VIP Concierge director will reach out within 2 hours to finalize your private walkthrough schedule.</p>
+        <button class="btn-secondary" id="reset-booking-btn">Close Window</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
