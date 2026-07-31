@@ -8,21 +8,15 @@ document.addEventListener('DOMContentLoaded', () => {
     lucide.createIcons();
   }
 
-  // 1. Lenis Smooth Scroll Engine
+  // 1. Lenis Smooth Scroll Engine (Buttery Smooth 60FPS Optimization)
   const lenis = new Lenis({
-    duration: 1.6,
+    duration: 1.3,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     smoothTouch: false,
-    wheelMultiplier: 0.95
+    wheelMultiplier: 0.88
   });
 
-  function raf(time) {
-    lenis.raf(time);
-    requestAnimationFrame(raf);
-  }
-  requestAnimationFrame(raf);
-
-  // Sync GSAP ScrollTrigger with Lenis
+  // Sync GSAP ScrollTrigger cleanly with Lenis ticker
   if (window.gsap && window.ScrollTrigger) {
     gsap.registerPlugin(ScrollTrigger);
 
@@ -31,6 +25,12 @@ document.addEventListener('DOMContentLoaded', () => {
       lenis.raf(time * 1000);
     });
     gsap.ticker.lagSmoothing(0);
+  } else {
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
   }
 
   // Remove loading class
@@ -318,38 +318,46 @@ function initHeroCanvasSequence() {
     images.push(img);
   }
 
-  // Draw current frame to canvas with responsive object-fit: cover math
+  let canvasWidth = window.innerWidth;
+  let canvasHeight = window.innerHeight;
+  canvas.width = canvasWidth;
+  canvas.height = canvasHeight;
+
+  function updateCanvasDimensions() {
+    canvasWidth = canvas.width = window.innerWidth;
+    canvasHeight = canvas.height = window.innerHeight;
+    renderFrame(sequence.frame);
+  }
+
+  window.addEventListener('resize', updateCanvasDimensions);
+
+  // High-Performance 60FPS Frame Renderer
   function renderFrame(index) {
     const img = images[index];
     if (!img || !img.complete) return;
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
     const imgWidth = img.width || 1920;
     const imgHeight = img.height || 1080;
-    const canvasAspect = canvas.width / canvas.height;
+    const canvasAspect = canvasWidth / canvasHeight;
     const imgAspect = imgWidth / imgHeight;
 
     let drawWidth, drawHeight, offsetX, offsetY;
 
     if (canvasAspect > imgAspect) {
-      drawWidth = canvas.width;
-      drawHeight = canvas.width / imgAspect;
+      drawWidth = canvasWidth;
+      drawHeight = canvasWidth / imgAspect;
       offsetX = 0;
-      offsetY = (canvas.height - drawHeight) / 2;
+      offsetY = (canvasHeight - drawHeight) / 2;
     } else {
-      drawWidth = canvas.height * imgAspect;
-      drawHeight = canvas.height;
-      offsetX = (canvas.width - drawWidth) / 2;
+      drawWidth = canvasHeight * imgAspect;
+      drawHeight = canvasHeight;
+      offsetX = (canvasWidth - drawWidth) / 2;
       offsetY = 0;
     }
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvasWidth, canvasHeight);
     ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
   }
-
-  window.addEventListener('resize', () => renderFrame(sequence.frame));
 
   // GSAP ScrollTrigger Sequence Scrubbing (Pinned Hero for Ultra-Smooth Slow Rotation)
   if (window.gsap && window.ScrollTrigger) {
@@ -364,9 +372,9 @@ function initHeroCanvasSequence() {
       scrollTrigger: {
         trigger: '#hero',
         start: 'top top',
-        end: '+=2500',
+        end: '+=2800',
         pin: true,
-        scrub: 0.8,
+        scrub: 1.0,
         onUpdate: (self) => {
           renderFrame(sequence.frame);
 
@@ -379,8 +387,8 @@ function initHeroCanvasSequence() {
             }
           }
 
-          // 2. Only reveal text AND soft frosted glass tint after 3D building animation is nearly complete (frame >= 140)
-          if (sequence.frame >= 140) {
+          // 2. Reveal text AND black tint ONLY when 3D building rotation finishes 100% (frame >= 170 / progress >= 0.93)
+          if (sequence.frame >= 170 || self.progress >= 0.93) {
             if (heroContent) heroContent.classList.add('visible');
             if (heroTint) heroTint.classList.add('visible');
           } else {

@@ -619,12 +619,14 @@ body.cursor-text-active #cursor-text {
   width: 100%;
   height: 100%;
   z-index: 1;
-  background: radial-gradient(circle at center, rgba(10, 12, 15, 0.6) 0%, rgba(10, 12, 15, 0.85) 100%);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: radial-gradient(circle at center, rgba(10, 12, 15, 0.65) 0%, rgba(10, 12, 15, 0.88) 100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity;
+  transform: translateZ(0);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .hero-text-tint-overlay.visible {
@@ -637,14 +639,15 @@ body.cursor-text-active #cursor-text {
   text-align: center;
   margin-top: 2rem;
   opacity: 0;
-  transform: translateY(40px);
+  transform: translateY(35px) translateZ(0);
   pointer-events: none;
-  transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+  will-change: opacity, transform;
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .hero-content.visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) translateZ(0);
   pointer-events: auto;
 }
 
