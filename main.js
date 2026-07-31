@@ -71,11 +71,18 @@ document.addEventListener('DOMContentLoaded', () => {
    MAGNETIC CURSOR
    ========================================================================== */
 function initCustomCursor() {
+  const customCursor = document.getElementById('custom-cursor');
   const cursorRing = document.getElementById('cursor-ring');
   const cursorDot = document.getElementById('cursor-dot');
   const cursorText = document.getElementById('cursor-text');
   
   if (!cursorRing || !cursorDot) return;
+
+  // Completely disable custom cursor on touch / mobile devices
+  if (window.matchMedia('(max-width: 1024px), (pointer: coarse)').matches) {
+    if (customCursor) customCursor.style.display = 'none';
+    return;
+  }
 
   let mouseX = window.innerWidth / 2;
   let mouseY = window.innerHeight / 2;
@@ -720,6 +727,17 @@ function initHeaderNav() {
         }
       });
     });
+
+    const drawerCloseBtn = document.getElementById('mobile-drawer-close');
+    if (drawerCloseBtn) {
+      drawerCloseBtn.addEventListener('click', () => {
+        navMenu.classList.remove('mobile-open');
+        if (iconOpen && iconClose) {
+          iconOpen.classList.remove('hidden');
+          iconClose.classList.add('hidden');
+        }
+      });
+    }
   }
 
   let lastScrollY = window.scrollY;
