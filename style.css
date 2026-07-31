@@ -2250,7 +2250,8 @@ body.cursor-text-active #cursor-text {
   }
 
   .hero-sequence-section {
-    padding-top: 4rem;
+    padding-top: 0;
+    min-height: 100vh;
   }
 
   .hero-badge {
