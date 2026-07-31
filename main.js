@@ -187,8 +187,6 @@ function initParticleCanvas() {
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
       ctx.fillStyle = `rgba(197, 168, 128, ${p.alpha})`;
-      ctx.shadowBlur = 10;
-      ctx.shadowColor = '#c5a880';
       ctx.fill();
     });
 
@@ -331,35 +329,45 @@ function initHeroCanvasSequence() {
 
   window.addEventListener('resize', updateCanvasDimensions);
 
-  // High-Performance 60FPS Frame Renderer
+  let isRendering = false;
+  let targetFrame = 0;
+
+  // High-Performance RAF-Debounced Frame Renderer (60FPS Lock)
   function renderFrame(index) {
-    const img = images[index];
-    if (!img || !img.complete) return;
+    targetFrame = index;
+    if (isRendering) return;
+    isRendering = true;
 
-    const imgWidth = img.width || 1920;
-    const imgHeight = img.height || 1080;
-    const canvasAspect = canvasWidth / canvasHeight;
-    const imgAspect = imgWidth / imgHeight;
+    requestAnimationFrame(() => {
+      const img = images[targetFrame];
+      if (img && img.complete) {
+        const imgWidth = img.width || 1920;
+        const imgHeight = img.height || 1080;
+        const canvasAspect = canvasWidth / canvasHeight;
+        const imgAspect = imgWidth / imgHeight;
 
-    let drawWidth, drawHeight, offsetX, offsetY;
+        let drawWidth, drawHeight, offsetX, offsetY;
 
-    if (canvasAspect > imgAspect) {
-      drawWidth = canvasWidth;
-      drawHeight = canvasWidth / imgAspect;
-      offsetX = 0;
-      offsetY = (canvasHeight - drawHeight) / 2;
-    } else {
-      drawWidth = canvasHeight * imgAspect;
-      drawHeight = canvasHeight;
-      offsetX = (canvasWidth - drawWidth) / 2;
-      offsetY = 0;
-    }
+        if (canvasAspect > imgAspect) {
+          drawWidth = canvasWidth;
+          drawHeight = canvasWidth / imgAspect;
+          offsetX = 0;
+          offsetY = (canvasHeight - drawHeight) / 2;
+        } else {
+          drawWidth = canvasHeight * imgAspect;
+          drawHeight = canvasHeight;
+          offsetX = (canvasWidth - drawWidth) / 2;
+          offsetY = 0;
+        }
 
-    ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-    ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
+        ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+        ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
+      }
+      isRendering = false;
+    });
   }
 
-  // GSAP ScrollTrigger Sequence Scrubbing (Pinned Hero for Ultra-Smooth Slow Rotation)
+  // GSAP ScrollTrigger Sequence Scrubbing (Butter Smooth Direct Responsive Rotation)
   if (window.gsap && window.ScrollTrigger) {
     const heroContent = document.querySelector('.hero-content');
     const heroTint = document.getElementById('hero-text-tint');
@@ -372,9 +380,9 @@ function initHeroCanvasSequence() {
       scrollTrigger: {
         trigger: '#hero',
         start: 'top top',
-        end: '+=2800',
+        end: '+=2400',
         pin: true,
-        scrub: 1.0,
+        scrub: 0.3,
         onUpdate: (self) => {
           renderFrame(sequence.frame);
 
@@ -399,21 +407,20 @@ function initHeroCanvasSequence() {
       }
     });
 
-    // Parallax movement for section cards
+    // Lightweight Section Card Reveals (Zero Lag)
     const parallaxCards = document.querySelectorAll('.arch-card, .facility-card, .sky-hero-box, .split-feature-row, .stack-info-panel');
-    parallaxCards.forEach((card, index) => {
-      const depth = (index % 2 === 0) ? 60 : -40;
+    parallaxCards.forEach((card) => {
       gsap.fromTo(card,
-        { y: depth, scale: 0.98 },
+        { y: 30, opacity: 0.85 },
         {
-          y: -depth,
-          scale: 1.02,
-          ease: 'none',
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          ease: 'power2.out',
           scrollTrigger: {
             trigger: card,
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: 1.2
+            start: 'top 88%',
+            toggleActions: 'play none none none'
           }
         }
       );
