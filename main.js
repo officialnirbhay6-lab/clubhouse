@@ -679,6 +679,37 @@ function initHeaderNav() {
   const sections = document.querySelectorAll('section[id]');
   const heroSection = document.getElementById('hero');
 
+  // Mobile Nav Drawer Toggle
+  const mobileToggle = document.getElementById('mobile-nav-toggle');
+  const navMenu = document.querySelector('.nav-menu');
+  const iconOpen = document.getElementById('menu-icon-open');
+  const iconClose = document.getElementById('menu-icon-close');
+
+  if (mobileToggle && navMenu) {
+    mobileToggle.addEventListener('click', () => {
+      const isOpen = navMenu.classList.toggle('mobile-open');
+      if (iconOpen && iconClose) {
+        if (isOpen) {
+          iconOpen.classList.add('hidden');
+          iconClose.classList.remove('hidden');
+        } else {
+          iconOpen.classList.remove('hidden');
+          iconClose.classList.add('hidden');
+        }
+      }
+    });
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('mobile-open');
+        if (iconOpen && iconClose) {
+          iconOpen.classList.remove('hidden');
+          iconClose.classList.add('hidden');
+        }
+      });
+    });
+  }
+
   let lastScrollY = window.scrollY;
 
   window.addEventListener('scroll', () => {
