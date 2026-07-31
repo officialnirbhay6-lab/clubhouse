@@ -65,9 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 10. VIP Booking Modal
   initBookingModal();
-
-  // 11. Sound Audio Player
-  initAudioPlayer();
 });
 
 /* ==========================================================================
@@ -812,36 +809,4 @@ function initBookingModal() {
       if (window.lucide) lucide.createIcons();
     });
   }
-}
-
-/* ==========================================================================
-   SOUND PLAYER
-   ========================================================================== */
-function initAudioPlayer() {
-  const audio = document.getElementById('ambient-audio');
-  const audioBtn = document.getElementById('audio-toggle');
-  const iconOff = document.getElementById('sound-icon-off');
-  const iconOn = document.getElementById('sound-icon-on');
-  const wave = document.querySelector('.sound-wave');
-
-  if (!audio || !audioBtn) return;
-
-  let isPlaying = false;
-
-  audioBtn.addEventListener('click', () => {
-    if (!isPlaying) {
-      audio.play().then(() => {
-        isPlaying = true;
-        if (iconOff) iconOff.classList.add('hidden');
-        if (iconOn) iconOn.classList.remove('hidden');
-        if (wave) wave.style.display = 'flex';
-      }).catch(err => console.log('Audio autoplay prevented:', err));
-    } else {
-      audio.pause();
-      isPlaying = false;
-      if (iconOff) iconOff.classList.remove('hidden');
-      if (iconOn) iconOn.classList.add('hidden');
-      if (wave) wave.style.display = 'none';
-    }
-  });
 }
