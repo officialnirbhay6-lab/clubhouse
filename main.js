@@ -348,7 +348,14 @@ function initHeroCanvasSequence() {
 
         let drawWidth, drawHeight, offsetX, offsetY;
 
-        if (canvasAspect > imgAspect) {
+        if (canvasWidth <= 768) {
+          // Mobile responsive framing: Ensure 100% of the 3D building model is fully visible without side cropping
+          const scale = canvasWidth <= 480 ? 0.92 : 0.96;
+          drawWidth = canvasWidth * scale;
+          drawHeight = drawWidth / imgAspect;
+          offsetX = (canvasWidth - drawWidth) / 2;
+          offsetY = (canvasHeight - drawHeight) / 2 - 15;
+        } else if (canvasAspect > imgAspect) {
           drawWidth = canvasWidth;
           drawHeight = canvasWidth / imgAspect;
           offsetX = 0;
